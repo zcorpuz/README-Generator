@@ -1,7 +1,6 @@
 var inquirer = require('inquirer');
 
-inquirer
-    .prompt([
+inquirer.prompt([
         {
             type: 'input',
             name: 'username',
@@ -57,7 +56,7 @@ inquirer
         {
             type: 'input',
             name: 'installation',
-            message: 'List specific steps for users to follow in order to use your application?',
+            message: 'List specific steps for users to follow in order to install your application',
             validate: function(answer) {
                 if (answer.length < 1) {
                     return 'You need to list at least one step for users';
@@ -67,8 +66,19 @@ inquirer
         },
         {
             type: 'input',
+            name: 'usage',
+            message: 'Please provide users instructions on how to use your application',
+            validate: function(answer) {
+                if (answer.length < 1) {
+                    return 'You need to list your license';
+                }
+                return true;
+            }
+        },
+        {
+            type: 'input',
             name: 'license',
-            message: 'Please list your license if your project is open source?',
+            message: 'Please list your license if your project is open source, if not licenses... input N/A',
             validate: function(answer) {
                 if (answer.length < 1) {
                     return 'You need to list your license';
