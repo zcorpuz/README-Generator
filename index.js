@@ -1,6 +1,12 @@
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
+const generate = require('./generateMarkdown');
 
-inquirer.prompt([
+const writeFileAsync = util.promisify(fs.writeFile);
+
+function promptGenerator() {
+    inquirer.prompt([
         {
             type: 'input',
             name: 'username',
@@ -35,25 +41,6 @@ inquirer.prompt([
             }
         },
         {
-            type: 'checkbox',
-            name: 'tableOfContents',
-            message: 'What would you like to include in your README?',
-            choices: [
-                {name: 'Installation'},
-                {name: 'Usage'},
-                {name: 'License'},
-                {name: 'Contributing'},
-                {name: 'Tests'},
-                {name: 'Questions'},
-            ],
-            validate: function(answer) {
-                if (answer.length < 1) {
-                    return 'You need to choose at least 1 option';
-                }
-                return true;
-            }
-        },
-        {
             type: 'input',
             name: 'installation',
             message: 'List specific steps for users to follow in order to install your application',
@@ -68,17 +55,6 @@ inquirer.prompt([
             type: 'input',
             name: 'usage',
             message: 'Please provide users instructions on how to use your application',
-            validate: function(answer) {
-                if (answer.length < 1) {
-                    return 'You need to list your license';
-                }
-                return true;
-            }
-        },
-        {
-            type: 'input',
-            name: 'license',
-            message: 'Please list your license if your project is open source, if not licenses... input N/A',
             validate: function(answer) {
                 if (answer.length < 1) {
                     return 'You need to list your license';
@@ -102,15 +78,7 @@ inquirer.prompt([
                 return true;
             }
         },
-        {
-            type: 'input',
-            name: 'questons',
-            message: '?',
-            validate: function(answer) {
-                if (answer.length < 1) {
-                    return 'You need to list your license';
-                }
-                return true;
-            }
-        },
-    ])
+    ]);
+};
+
+promptGenerator();
