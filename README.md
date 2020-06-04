@@ -1,6 +1,6 @@
-function generateMarkdown(data) {
-    return `
-    # ${data.title}
+
+    
+    # alsdfkj
   
     ## Table of Contents
         * [Description] (#Description)
@@ -11,28 +11,22 @@ function generateMarkdown(data) {
     
     ## Description
     
-    ${data.description}
+    asdf
 
     ## Installation
 
-    ${data.installation}
+    asdf
 
     ## Usage
 
-    ${data.usage}
+    asdf
 
     ## Contributing
 
-    ${data.contributing}
+    asdf
 
     ##Tests
 
-    ${data.tests}
+    asdf
 
-  `;
-  }
-  
-  module.exports = {
-      generateMarkdown: generateMarkdown
-  }  
   

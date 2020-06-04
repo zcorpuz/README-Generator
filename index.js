@@ -5,7 +5,7 @@ const generate = require('./generateMarkdown');
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-function promptGenerator(data) {
+function promptGenerator() {
     inquirer.prompt([
         {
             type: 'input',
@@ -54,7 +54,13 @@ function promptGenerator(data) {
         {
             type: 'input',
             name: 'contributing',
-            message: 'Describe if you would like for others to contribute to your project and how to do so'
+            message: 'Describe if you would like for others to contribute to your project and how to do so',
+            validate: function(answer) {
+                if (answer.length < 1) {
+                    return 'Please indicate if you would like others to contribute or not';
+                }
+                return true;
+            }
         },
         {
             type: 'input',
@@ -66,32 +72,26 @@ function promptGenerator(data) {
                 }
                 return true;
             }
-        },
-    ]);
-};
+        }
+    ])
+    .then( data => {
+        return writeToFile("README.md", data)
+    })
+}
+
+
+function writeToFile(fileName, data) {
+    const text = generate.generateMarkdown(data);
+
+    writeFileAsync(fileName, text);
+}
 
 function init() {
     console.log("Let's create the perfect README");
-    promptGenerator();
-    writeFileAsync("README.md", generate);
-}
+    promptGenerator()
+};
 
 init();
-
-
-
-
-
-// async function init() {
-//     console.log("Lets create the perfect README")
-//     try {
-//         promptGenerator();
-
-//        await writeFileAsync("ReadME.md", generate);
-//     } catch(err) {
-//         console.log(err);
-//     }
-// }
 
 
 
