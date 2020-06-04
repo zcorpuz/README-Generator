@@ -5,19 +5,8 @@ const generate = require('./generateMarkdown');
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
-function promptGenerator() {
+function promptGenerator(data) {
     inquirer.prompt([
-        {
-            type: 'input',
-            name: 'username',
-            message: 'What is your GitHub username?',
-            validate: function(answer) {
-                if (answer.length < 1) {
-                    return 'You need to enter a valid username';
-                }
-                return true;
-            }
-        },
         {
             type: 'input',
             name: 'title',
@@ -63,9 +52,9 @@ function promptGenerator() {
             }
         },
         {
-            type: 'confirm',
+            type: 'input',
             name: 'contributing',
-            message: 'Would you like to allow others to contribute to your project?'
+            message: 'Describe if you would like for others to contribute to your project and how to do so'
         },
         {
             type: 'input',
@@ -81,4 +70,28 @@ function promptGenerator() {
     ]);
 };
 
-promptGenerator();
+function init() {
+    console.log("Let's create the perfect README");
+    promptGenerator();
+    writeFileAsync("README.md", generate);
+}
+
+init();
+
+
+
+
+
+// async function init() {
+//     console.log("Lets create the perfect README")
+//     try {
+//         promptGenerator();
+
+//        await writeFileAsync("ReadME.md", generate);
+//     } catch(err) {
+//         console.log(err);
+//     }
+// }
+
+
+
