@@ -6,7 +6,7 @@ const generate = require('./generateMarkdown');
 const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptGenerator() {
-    inquirer.prompt([
+   return inquirer.prompt([
         {
             type: 'input',
             name: 'title',
